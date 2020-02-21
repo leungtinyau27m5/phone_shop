@@ -89,6 +89,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const HomeCarousel = (props) => {
+    //props
     const { 
         itemList, 
         elevation, 
@@ -104,9 +105,24 @@ const HomeCarousel = (props) => {
         paperMargin: paperStyle.margin? paperStyle.margin : `${8}px`,
         itemLength: itemList.length
     }
+    //end of props
+
+    //state
     const [activeIdx, setActiveIdx] = useState(currentIdx === undefined ? 0 : currentIdx)
     var itemLength = itemList.length
+    //end of state
 
+    //componentdidupdate
+    useEffect(() => {
+        scrollCarousel()
+    }, [activeIdx])
+    //end of componentdidupdate
+
+    //constant
+    const classes = useStyles(styleProps)
+    const paperScrollable = React.createRef()
+
+    //funcs
     const scrollCarousel = () => {
         paperScrollable.current.style.transform = `translateX(calc((100vw - ${styleProps.paperWidth}) / 2 - ${styleProps.paperMargin} - ${styleProps.paperMargin} / 2 - (${styleProps.paperWidth} + ${styleProps.paperMargin} * 2) * ${activeIdx} + ${styleProps.paperMargin} / 2))`
     }
@@ -117,24 +133,12 @@ const HomeCarousel = (props) => {
         if (idx === true && activeIdx + 1 < itemLength) setActiveIdx(activeIdx + 1)
         if (idx === true && activeIdx + 1 >= itemLength) setActiveIdx(0)
     }
-    useEffect(() => {
-        scrollCarousel()
-    }, [activeIdx])
-    //currentIdx = currentIdx === undefined ? 0 : currentIdx
-    const classes = useStyles(styleProps)
-    const paperScrollable = React.createRef()
-    return (
-        <div className={classes.root}>
-            <div className={classes.paperContainer} ref={paperScrollable}>
-                {itemList.map((ele, idx) => {
-                    return (
-                        <Paper key={`carousel-${idx}`} elevation={elevation}>
-                            {ele}
-                        </Paper>
-                    )
-                })}
-            </div>
-            <div className={classes.dotContainer}>
+
+    //render funcs
+    const dotControlPanel = () => {
+        if (dotControl) {
+            return (
+                <div className={classes.dotContainer}>
                 {
                     itemList.map((ele, idx) => {
                         return (
@@ -151,19 +155,41 @@ const HomeCarousel = (props) => {
                         )
                     })
                 }
-            </div>
-            <div className={classes.arrowContainer}>
-                <div className={classes.arrowLeft}>
-                    <IconButton className={classes.arrowButton} onClick={() => setCarousel(false)}>
-                        <ArrowBackIosIcon />
-                    </IconButton>
                 </div>
-                <div className={classes.arrowRight}>
-                    <IconButton className={classes.arrowButton} onClick={() => setCarousel(true)}>
-                        <ArrowForwardIosIcon />
-                    </IconButton>
+            )
+        }
+    }
+    const arrowControlPanel = () => {
+        if (arrowControl) {
+            return (
+                <div className={classes.arrowContainer}>
+                    <div className={classes.arrowLeft}>
+                        <IconButton className={classes.arrowButton} onClick={() => setCarousel(false)}>
+                            <ArrowBackIosIcon />
+                        </IconButton>
+                    </div>
+                    <div className={classes.arrowRight}>
+                        <IconButton className={classes.arrowButton} onClick={() => setCarousel(true)}>
+                            <ArrowForwardIosIcon />
+                        </IconButton>
+                    </div>
                 </div>
+            )
+        }
+    }
+    return (
+        <div className={classes.root}>
+            <div className={classes.paperContainer} ref={paperScrollable}>
+                {itemList.map((ele, idx) => {
+                    return (
+                        <Paper key={`carousel-${idx}`} elevation={elevation}>
+                            {ele}
+                        </Paper>
+                    )
+                })}
             </div>
+            {dotControlPanel()}
+            {arrowControlPanel()}
         </div>
     )
 }
