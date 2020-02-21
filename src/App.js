@@ -4,10 +4,12 @@ import HomeCarousel from './components/HomeCarousel'
 function App() {
   const carouselSettings = {
     elevation: 3,
-    itemList: ['1', '2', '3', '4'],
+    itemList: ['1', '2', '3', '4', '5'],
     paperStyle: {
       minWidth: '80vw',
-      minHeight: '250px'
+      minHeight: '180px',
+      maxHeight: '420px',
+      margin: '2vw'
     },
     dotControl: true,
     arrowControl: true,

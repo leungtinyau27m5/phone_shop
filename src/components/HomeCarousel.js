@@ -1,4 +1,4 @@
-import React, {} from 'react'
+import React, { useState, useEffect } from 'react'
 import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
@@ -14,52 +14,54 @@ const vhToPx = (vh) => {
     return (window.innerHeight/ 100) * vh // n px per 1vh
 }
 
+const splitUnit = (value) => {
+    return {d: value.match(/\d+/g), unit: value.match(/[a-zA-Z]+/gi)}
+}
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         overflowX: 'hidden',
         position: 'relative',
-        transition: 'all 1s linear',
         '& > div > .MuiPaper-root': {
-            margin: paperStyle => paperStyle.margin? paperStyle.margin : theme.spacing(1),
-            minWidth: paperStyle => paperStyle.minWidth ? paperStyle.minWidth : theme.spacing(16),
-            minHeight: paperStyle => paperStyle.minHeight ? paperStyle.minHeight : theme.spacing(16),
+            margin: styleProps => styleProps.paperMargin,
+            width: styleProps => styleProps.paperWidth,
+            [theme.breakpoints.down('sm')]: {
+                height: styleProps => styleProps.paperHeight,
+            },
+            [theme.breakpoints.up('md')]: {
+                height: styleProps => styleProps.paperMaxHeight,
+            },
             zIndex: '2',
         }
     },
     paperContainer: {
-        width: '320vw',
+        width: styleProps => `${100 * (styleProps.itemLength + 1)}vw`,
         display: 'flex',
-        transform: paperStyle => `translateX(calc(${(100 - 80) / 2}vw - 8px))`,
-        transition: 'all .5s linear'
-        //animation: `$carouselScrollEffect 3000ms linear infinite`
-    },
-    "@keyframes carouselScrollEffect": {
-        "100%": {
-            transform: "translateX(-66.66%)"
-        }
+        transform: styleProps => `translateX(calc((100vw - ${styleProps.paperWidth}) / 2 - ${styleProps.paperMargin} - ${styleProps.paperMargin} / 2 + ${styleProps.paperMargin} / 2))`,
+        transition: 'transform .5s ease-in-out'
     },
     dotContainer: {
         position: 'absolute',
         minHeight: '20px',
         left: '50%',
-        bottom: '20px',
+        bottom: styleProps => `${styleProps.paperMargin}`,
         transform: 'translateX(-50%)',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        width: paperStyle => paperStyle.minWidth ? paperStyle.minWidth : theme.spacing(16),
+        zIndex: '10',
+        width: styleProps => styleProps.paperWidth,
         '& > *': {
-            fontSize: theme.spacing(2),
-            marginLeft: '4px',
-            marginRight: '4px'
+            fontSize: theme.spacing(1),
+            padding: theme.spacing(1),
+            zIndex: '10'
         }
     },
     arrowContainer: {
         position: 'absolute',
-        margin: paperStyle => paperStyle.margin? paperStyle.margin : theme.spacing(1),
         minWidth: '100vw',
-        minHeight: paperStyle => paperStyle.minHeight ? paperStyle.minHeight : theme.spacing(16)
+        height: '100%',
     },
     arrowLeft: {
         position: 'absolute',
@@ -70,25 +72,23 @@ const useStyles = makeStyles(theme => ({
     },
     arrowRight: {
         position: 'absolute',
-        right: '15px',
+        right: '0',
         top: '50%',
         transform: 'translateY(-50%)',
         zIndex: '3'
     },
     arrowButton: {
-        height: '120px'
+        borderRadius: '0',
+        [theme.breakpoints.down('sm')]: {
+            height: styleProps => styleProps.paperHeight,
+        },
+        [theme.breakpoints.up('md')]: {
+            height: styleProps => styleProps.paperMaxHeight,
+        },
     }
 }))
 
 const HomeCarousel = (props) => {
-    const scrollCarousel = (nextStep) => {
-        if (nextStep && currentIdx + 1 < itemLength) {
-            
-            //paperScrollable.current.style.transform = `translateX(-${90 * currentIdx}vw)`
-        } else if (!nextStep && currentIdx > 0) {
-
-        }
-    }
     const { 
         itemList, 
         elevation, 
@@ -97,14 +97,31 @@ const HomeCarousel = (props) => {
         arrowControl,
         currentIdx
     } = props
-    //currentIdx = currentIdx === undefined ? 0 : currentIdx
     const styleProps = {
         paperWidth: paperStyle.minWidth ? paperStyle.minWidth : `75vw`,
         paperHeight: paperStyle.minHeight ? paperStyle.minHeight : `${16 * 8}px`,
-        paperMargin: paperStyle.margin? paperStyle.margin : `${8}px`
+        paperMaxHeight: paperStyle.maxHeight ? paperStyle.maxHeight : `${16 * 8}px`,
+        paperMargin: paperStyle.margin? paperStyle.margin : `${8}px`,
+        itemLength: itemList.length
     }
+    const [activeIdx, setActiveIdx] = useState(currentIdx === undefined ? 0 : currentIdx)
     var itemLength = itemList.length
-    const classes = useStyles(paperStyle, itemLength, currentIdx)
+
+    const scrollCarousel = () => {
+        paperScrollable.current.style.transform = `translateX(calc((100vw - ${styleProps.paperWidth}) / 2 - ${styleProps.paperMargin} - ${styleProps.paperMargin} / 2 - (${styleProps.paperWidth} + ${styleProps.paperMargin} * 2) * ${activeIdx} + ${styleProps.paperMargin} / 2))`
+    }
+    const setCarousel = (idx) => {
+        if (idx !== false && idx !== true) setActiveIdx(idx)
+        if (idx === false && activeIdx > 0) setActiveIdx(activeIdx - 1)
+        if (idx === false && activeIdx <= 0) setActiveIdx(itemLength - 1)
+        if (idx === true && activeIdx + 1 < itemLength) setActiveIdx(activeIdx + 1)
+        if (idx === true && activeIdx + 1 >= itemLength) setActiveIdx(0)
+    }
+    useEffect(() => {
+        scrollCarousel()
+    }, [activeIdx])
+    //currentIdx = currentIdx === undefined ? 0 : currentIdx
+    const classes = useStyles(styleProps)
     const paperScrollable = React.createRef()
     return (
         <div className={classes.root}>
@@ -121,19 +138,28 @@ const HomeCarousel = (props) => {
                 {
                     itemList.map((ele, idx) => {
                         return (
-                            <FiberManualRecordIcon key={`caoursel-dot-${idx}`} className={classes.dot}/>
+                            <IconButton 
+                                key={`caoursel-dot-${idx}`} 
+                                onClick={() => setCarousel(idx)} 
+                                style={{
+                                    color: idx === activeIdx ? 'red' : 'rgba(0, 0, 0, 0.54)',
+                                    transition: 'all .5s linear'
+                                }}
+                            >
+                                <FiberManualRecordIcon className={classes.dot}/>
+                            </IconButton>
                         )
                     })
                 }
             </div>
             <div className={classes.arrowContainer}>
                 <div className={classes.arrowLeft}>
-                    <IconButton className={classes.arrowButton} onClick={() => scrollCarousel(false)}>
+                    <IconButton className={classes.arrowButton} onClick={() => setCarousel(false)}>
                         <ArrowBackIosIcon />
                     </IconButton>
                 </div>
                 <div className={classes.arrowRight}>
-                    <IconButton className={classes.arrowButton} onClick={() => scrollCarousel(true)}>
+                    <IconButton className={classes.arrowButton} onClick={() => setCarousel(true)}>
                         <ArrowForwardIosIcon />
                     </IconButton>
                 </div>
