@@ -41,6 +41,10 @@ const styles = makeStyles(theme => ({
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
         }
+    },
+    itemIcon: {
+        display: 'flex',
+        justifyContent: 'center'
     }
 }))
 
@@ -73,7 +77,7 @@ const TopAppBar = ({mainState, ownState, appBarNav}) => {
                                         <ListItem key={`app-bar-item${item.value}`} className={classes.listItem} button>
                                             {
                                                 item.icon !== null ? 
-                                                    <ListItemIcon>{item.icon}</ListItemIcon> :
+                                                    <ListItemIcon className={classes.itemIcon}>{item.icon}</ListItemIcon> :
                                                     <></>
 
                                             }
