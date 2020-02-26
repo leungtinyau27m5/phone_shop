@@ -6,17 +6,19 @@ import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
+/*
 const vwToPx = (vw) => {
     return (window.innerWidth / 100) * vw // n px per 1vw
 }
 
 const vhToPx = (vh) => {
-    return (window.innerHeight/ 100) * vh // n px per 1vh
+    return (window.innerHeight / 100) * vh // n px per 1vh
 }
 
 const splitUnit = (value) => {
-    return {d: value.match(/\d+/g), unit: value.match(/[a-zA-Z]+/gi)}
+    return { d: value.match(/\d+/g), unit: value.match(/[a-zA-Z]+/gi) }
 }
+*/
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,10 +29,10 @@ const useStyles = makeStyles(theme => ({
             margin: styleProps => styleProps.paperMargin,
             width: styleProps => styleProps.paperWidth,
             [theme.breakpoints.down('sm')]: {
-                height: styleProps => styleProps.paperHeight,
+                minHeight: styleProps => styleProps.paperHeight,
             },
             [theme.breakpoints.up('md')]: {
-                height: styleProps => styleProps.paperMaxHeight,
+                maxHeight: styleProps => styleProps.paperMaxHeight,
             },
             zIndex: '2',
         }
@@ -59,9 +61,9 @@ const useStyles = makeStyles(theme => ({
         }
     },
     arrowContainer: {
-        position: 'absolute',
+        //position: 'absolute',
         minWidth: '100vw',
-        height: '100%',
+        //height: '100%',
     },
     arrowLeft: {
         position: 'absolute',
@@ -80,52 +82,77 @@ const useStyles = makeStyles(theme => ({
     arrowButton: {
         borderRadius: '0',
         [theme.breakpoints.down('sm')]: {
-            height: styleProps => styleProps.paperHeight,
+            minHeight: styleProps => styleProps.paperHeight,
         },
         [theme.breakpoints.up('md')]: {
-            height: styleProps => styleProps.paperMaxHeight,
+            minHeight: styleProps => styleProps.paperHeight,
         },
+    },
+    paperItSelf: {
+        display: 'flex',
+        flexGrow: 1,
     }
 }))
 
 const HomeCarousel = (props) => {
-    //props
-    const { 
-        itemList, 
-        elevation, 
+    const {
+        elevation,
         paperStyle,
         dotControl,
         arrowControl,
-        currentIdx
+        arrowColor,
+        dotColor,
+        currentIdx,
+        children,
     } = props
     const styleProps = {
         paperWidth: paperStyle.minWidth ? paperStyle.minWidth : `75vw`,
         paperHeight: paperStyle.minHeight ? paperStyle.minHeight : `${16 * 8}px`,
         paperMaxHeight: paperStyle.maxHeight ? paperStyle.maxHeight : `${16 * 8}px`,
-        paperMargin: paperStyle.margin? paperStyle.margin : `${8}px`,
-        itemLength: itemList.length
+        paperMargin: paperStyle.margin ? paperStyle.margin : `${8}px`,
+        itemLength: children.length,
+        arrowColor: arrowColor,
+        dotColor: dotColor
     }
     //end of props
 
     //state
     const [activeIdx, setActiveIdx] = useState(currentIdx === undefined ? 0 : currentIdx)
-    var itemLength = itemList.length
+    const [onCarouselHover, setCarouselHover] = useState(false)
+    var itemLength = children.length
     //end of state
 
+    //funcs
+    const scrollCarousel = () => {
+        paperScrollable.current.style.transform = `translateX(calc((100vw - ${styleProps.paperWidth}) / 2 - ${styleProps.paperMargin} - ${styleProps.paperMargin} / 2 - (${styleProps.paperWidth} + ${styleProps.paperMargin} * 2) * ${activeIdx} + ${styleProps.paperMargin} / 2))`
+    }
+    const carouselHoverEvt = (e, onHover) => {
+        console.log(onHover)
+        setCarouselHover(onHover)
+    }
     //componentdidupdate
     useEffect(() => {
         scrollCarousel()
-    }, [activeIdx])
+    })
+
+    useEffect(() => {
+        if (onCarouselHover) return
+        if (!props.autoPlay) return
+        const autoPlayCarousel = setInterval(() => {
+            if (activeIdx + 1 > itemLength - 1) {
+                setActiveIdx(0)
+            } else {
+                setActiveIdx(activeIdx + 1)
+            }
+        }, props.timeInterval ? props.timeInterval : 3000)
+        return () => clearInterval(autoPlayCarousel)
+    }, [activeIdx, itemLength, props.autoPlay, props.timeInterval, onCarouselHover])
     //end of componentdidupdate
 
     //constant
     const classes = useStyles(styleProps)
     const paperScrollable = React.createRef()
 
-    //funcs
-    const scrollCarousel = () => {
-        paperScrollable.current.style.transform = `translateX(calc((100vw - ${styleProps.paperWidth}) / 2 - ${styleProps.paperMargin} - ${styleProps.paperMargin} / 2 - (${styleProps.paperWidth} + ${styleProps.paperMargin} * 2) * ${activeIdx} + ${styleProps.paperMargin} / 2))`
-    }
     const setCarousel = (idx) => {
         if (idx !== false && idx !== true) setActiveIdx(idx)
         if (idx === false && activeIdx > 0) setActiveIdx(activeIdx - 1)
@@ -139,22 +166,22 @@ const HomeCarousel = (props) => {
         if (dotControl) {
             return (
                 <div className={classes.dotContainer}>
-                {
-                    itemList.map((ele, idx) => {
-                        return (
-                            <IconButton 
-                                key={`caoursel-dot-${idx}`} 
-                                onClick={() => setCarousel(idx)} 
-                                style={{
-                                    color: idx === activeIdx ? 'red' : 'rgba(0, 0, 0, 0.54)',
-                                    transition: 'all .5s linear'
-                                }}
-                            >
-                                <FiberManualRecordIcon className={classes.dot}/>
-                            </IconButton>
-                        )
-                    })
-                }
+                    {
+                        children.map((ele, idx) => {
+                            return (
+                                <IconButton
+                                    key={`caoursel-dot-${idx}`}
+                                    onClick={() => setCarousel(idx)}
+                                    style={{
+                                        color: idx === activeIdx ? dotColor.active : dotColor.inactive,
+                                        transition: 'all .5s linear'
+                                    }}
+                                >
+                                    <FiberManualRecordIcon className={classes.dot} />
+                                </IconButton>
+                            )
+                        })
+                    }
                 </div>
             )
         }
@@ -165,25 +192,32 @@ const HomeCarousel = (props) => {
                 <div className={classes.arrowContainer}>
                     <div className={classes.arrowLeft}>
                         <IconButton className={classes.arrowButton} onClick={() => setCarousel(false)}>
-                            <ArrowBackIosIcon />
+                            <ArrowBackIosIcon style={{color: arrowColor }}/>
                         </IconButton>
                     </div>
                     <div className={classes.arrowRight}>
                         <IconButton className={classes.arrowButton} onClick={() => setCarousel(true)}>
-                            <ArrowForwardIosIcon />
+                            <ArrowForwardIosIcon style={{color: arrowColor }}/>
                         </IconButton>
                     </div>
                 </div>
             )
         }
     }
+
     return (
         <div className={classes.root}>
             <div className={classes.paperContainer} ref={paperScrollable}>
-                {itemList.map((ele, idx) => {
+                {children.map((ele, idx) => {
                     return (
-                        <Paper key={`carousel-${idx}`} elevation={elevation}>
-                            {ele}
+                        <Paper 
+                            key={`carousel-${idx}`} 
+                            elevation={elevation} 
+                            className={`${props.custClasses.customPaperStyle} ${classes.paperItSelf} ${activeIdx === idx ? 'is-active' : ''}`}
+                            onMouseEnter={(e) => carouselHoverEvt(e, true)}
+                            onMouseLeave={(e) => carouselHoverEvt(e, false)}
+                        >
+                            {ele.props.children}
                         </Paper>
                     )
                 })}
