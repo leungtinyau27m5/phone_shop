@@ -127,7 +127,6 @@ const HomeCarousel = (props) => {
         paperScrollable.current.style.transform = `translateX(calc((100vw - ${styleProps.paperWidth}) / 2 - ${styleProps.paperMargin} - ${styleProps.paperMargin} / 2 - (${styleProps.paperWidth} + ${styleProps.paperMargin} * 2) * ${activeIdx} + ${styleProps.paperMargin} / 2))`
     }
     const carouselHoverEvt = (e, onHover) => {
-        console.log(onHover)
         setCarouselHover(onHover)
     }
     //componentdidupdate

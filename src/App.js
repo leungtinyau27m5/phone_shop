@@ -6,7 +6,7 @@ import GridPanel from './components/GridPanel'
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{paddingBottom: '105px'}}>
       <TopAppBar />
       <HomePage />
       <GridPanel>
