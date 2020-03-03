@@ -203,7 +203,7 @@ const HomeCarousel = (props) => {
             )
         }
     }
-
+    console.log(children)
     return (
         <div className={classes.root}>
             <div className={classes.paperContainer} ref={paperScrollable}>

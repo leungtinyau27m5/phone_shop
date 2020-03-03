@@ -215,156 +215,116 @@ const HomePage = () => {
       },
       arrowColor: 'red'
     }
+    const carouselItemContent = [{
+        backgroundImage: phoneBanner,
+        background: `linear-gradient(to bottom right, #15151D, #1B2234`,
+        smallImage: phone1,
+        smallImageAlt: 'phone-1',
+        descriptionItems: [{
+            icon: <BatteryChargingFullIcon className={carouselClasses.iconStyle} />,
+            long: '2 Days Non-Stop Use With 5000mAh Battery',
+            short: '5000mAh'
+        }, {
+            icon: <AudiotrackIcon className={carouselClasses.iconStyle}/>,
+            long: 'Loud, Atmos-enhanced, good-quality speakers',
+            short: 'Great Speakers'
+        }, {
+            icon: <ScoreIcon className={carouselClasses.iconStyle}/>,
+            long: '2k Resolution With HDR',
+            short: '2k Screen'	
+        }, {
+            icon: <CameraIcon className={carouselClasses.iconStyle}/> ,
+            long: 'AI Dual Camera and Phone Learning',
+            short: 'AI Camera'
+        }],
+        phoneName: 'APhone X',
+        link: '1'
+    }, {
+        backgroundImage: banner2,
+        background: `linear-gradient(to bottom right, #31393C, #82979A)`,
+        smallImage: phone2,
+        smallImageAlt: 'phone-2',
+        descriptionItems: [{
+            icon: <BatteryChargingFullIcon className={carouselClasses.iconStyle} />,
+            long: '2 Days Non-Stop Use With 5000mAh Battery',
+            short: '5000mAh'
+        }, {
+            icon: <AudiotrackIcon className={carouselClasses.iconStyle}/>,
+            long: 'Loud, Atmos-enhanced, good-quality speakers',
+            short: 'Great Speakers'
+        }, {
+            icon: <ScoreIcon className={carouselClasses.iconStyle}/>,
+            long: '2k Resolution With HDR',
+            short: '2k Screen'	
+        }],
+        phoneName: 'APhone M',
+        link: '2'
+    }, {
+        backgroundImage: banner3,
+        background: `linear-gradient(to bottom right, #232323, #ABABAB)`,
+        smallImage: phone3,
+        smallImageAlt: 'phone-3',
+        descriptionItems: [{
+            icon: <BatteryChargingFullIcon className={carouselClasses.iconStyle} />,
+            long: '2 Days Non-Stop Use With 5000mAh Battery',
+            short: '5000mAh'
+        }, {
+            icon: <AudiotrackIcon className={carouselClasses.iconStyle}/>,
+            long: 'Loud, Atmos-enhanced, good-quality speakers',
+            short: 'Great Speakers'
+        }],
+        phoneName: 'APhone M2',
+        link: '3'
+    }, {
+        backgroundImage: banner4,
+        background: `linear-gradient(to bottom right, #5C6D63, #EBCEA9)`,
+        smallImage: phone4,
+        smallImageAlt: 'phone-4',
+        descriptionItems: [{
+            icon: <BatteryChargingFullIcon className={carouselClasses.iconStyle} />,
+            long: '2 Days Non-Stop Use With 5000mAh Battery',
+            short: '5000mAh'
+        }, {
+            icon: <AudiotrackIcon className={carouselClasses.iconStyle}/>,
+            long: 'Loud, Atmos-enhanced, good-quality speakers',
+            short: 'Great Speakers'
+        }],
+        phoneName: 'APhone Ma2',
+        link: '4'
+    }]
     return (
         <>
             <HomeCarousel {...carouselSettings}>
-                <div>
-                    <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${phoneBanner})`}}></div>
-                    <a href={'1'}>
-                    <div className={carouselClasses.descriptionContainer} style={{background: `linear-gradient(to bottom right, #15151D, #1B2234)`}}>
-                        <img src={phone1} className={carouselClasses.smallImage} alt={`phone-1`}/>
-                        <div className={carouselClasses.descriptionDetail}>
-                            <div className={carouselClasses.descriptionText}>
-                                <BatteryChargingFullIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    2 Days Non-Stop Use with 5000mAh Battery
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    5000mAh
-                                </p>
+                {
+                    carouselItemContent.map(content => {
+                        return (
+                            <div key={`carousel-item-content-${content.phoneName}-${content.smallImageAlt}`}>
+                                <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${content.backgroundImage})`}}></div>
+                                    <a href={content.link}>
+                                        <div className={carouselClasses.descriptionContainer} style={{background: `${content.background}`}}>
+                                            <img src={content.smallImage} className={carouselClasses.smallImage} alt={content.smallImageAlt}/>
+                                            <div className={carouselClasses.descriptionDetail}>
+                                                {content.descriptionItems.map((item, idx) => {
+                                                    return (
+                                                        <div className={carouselClasses.descriptionText} key={`${content.phoneName}-item-${idx}`}>
+                                                            {item.icon}
+                                                            <p className={carouselClasses.descriptionLong}>
+                                                                {item.long}
+                                                            </p>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                        <div className={carouselClasses.titleContainer}>
+                                            {content.phoneName}
+                                        </div>
+                                        <InfoIcon className={carouselClasses.infoIcon}/>
+                                    </a>
                             </div>
-                            <div className={carouselClasses.descriptionText}>
-                                <AudiotrackIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    Loud, Atmos-enhanced, good-quality speakers
-                                </p>
-                                <p  className={carouselClasses.descriptionShort}>
-                                    Great Speakers
-                                </p>
-                            </div>
-                            <div className="flex-breakpoint"/> 
-                            <div className={carouselClasses.descriptionText}>
-                                <ScoreIcon className={carouselClasses.iconStyle}/>
-                                <p  className={carouselClasses.descriptionLong}>
-                                    2k Resolution with HDR
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    2k Screen
-                                </p>
-                            </div>
-                            <div className={carouselClasses.descriptionText}>
-                                <CameraIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    AI Dual Camera and Phone Learning
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    AI Camera
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={carouselClasses.titleContainer}>
-                        APhone X
-                    </div>
-                    <InfoIcon className={carouselClasses.infoIcon}/>
-                    </a>
-                </div>
-                <div>
-                    <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${banner2})`}}></div>
-                    <a href={'2'}>
-                    <div className={carouselClasses.descriptionContainer} style={{background: `linear-gradient(to bottom right, #31393C, #82979A)`}}>
-                        <img src={phone2} className={carouselClasses.smallImage} alt={`phone-2`}/>
-                        <div className={carouselClasses.descriptionDetail}>
-                            <div className={carouselClasses.descriptionText}>
-                                <BatteryChargingFullIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    2 Days Non-Stop Use with 5000mAh Battery
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    5000mAh
-                                </p>
-                            </div>
-                            <div className={carouselClasses.descriptionText}>
-                                <AudiotrackIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    Loud, Atmos-enhanced, good-quality speakers
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    Great Speakers
-                                </p>
-                            </div>
-                            <div className={carouselClasses.descriptionText}>
-                                <ScoreIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    2k Resolution with HDR
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    2k Screen
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={carouselClasses.titleContainer}>
-                        APhone Max Pro
-                    </div>
-                    <InfoIcon className={carouselClasses.infoIcon}/>
-                    </a>
-                </div>
-                <div>
-                    <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${banner3})`}}></div>
-                    <a href={'3'}>
-                    <div className={carouselClasses.descriptionContainer} style={{background: `linear-gradient(to bottom right, #232323, #ABABAB)`}}>
-                        <img src={phone3} className={carouselClasses.smallImage} alt={`phone-3`}/>
-                        <div className={carouselClasses.descriptionDetail}>
-                            <div className={carouselClasses.descriptionText}>
-                                <BatteryChargingFullIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    2 Days Non-Stop Use with 5000mAh Battery
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    5000mAh
-                                </p>
-                            </div>
-                            <div className={carouselClasses.descriptionText}>
-                                <AudiotrackIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    Loud, Atmos-enhanced, good-quality speakers
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    Great Speakers
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={carouselClasses.titleContainer}>
-                        APhone M1
-                    </div>
-                    <InfoIcon className={carouselClasses.infoIcon}/>
-                    </a>
-                </div>
-                <div>
-                    <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${banner4})`}}></div>
-                    <a href={'4'}>
-                    <div className={carouselClasses.descriptionContainer} style={{background: `linear-gradient(to bottom right, #5C6D63, #EBCEA9)`}}>
-                        <img src={phone4} className={carouselClasses.smallImage} alt={`phone-4`}/>
-                        <div className={carouselClasses.descriptionDetail}>
-                            <div className={carouselClasses.descriptionText}>
-                                <BatteryChargingFullIcon className={carouselClasses.iconStyle}/> 
-                                <p className={carouselClasses.descriptionLong}>
-                                    2 Days Non-Stop Use with 5000mAh Battery
-                                </p>
-                                <p className={carouselClasses.descriptionShort}>
-                                    5000mAh
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={carouselClasses.titleContainer}>
-                        APhone Ma2
-                    </div>
-                    <InfoIcon className={carouselClasses.infoIcon}/>
-                    </a>
-                </div>
+                        )
+                    })
+                }
             </HomeCarousel>
             <Recommendation />
         </>
