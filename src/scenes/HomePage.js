@@ -128,6 +128,7 @@ const carouselStyles = makeStyles(theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: 'center',
     },
     iconStyle: {
         display: 'flex',
@@ -284,10 +285,6 @@ const HomePage = () => {
             icon: <BatteryChargingFullIcon className={carouselClasses.iconStyle} />,
             long: '2 Days Non-Stop Use With 5000mAh Battery',
             short: '5000mAh'
-        }, {
-            icon: <AudiotrackIcon className={carouselClasses.iconStyle}/>,
-            long: 'Loud, Atmos-enhanced, good-quality speakers',
-            short: 'Great Speakers'
         }],
         phoneName: 'APhone Ma2',
         link: '4'

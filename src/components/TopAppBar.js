@@ -12,12 +12,19 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Fade from '@material-ui/core/Fade'
+import bgParallax from '../assets/img/pa_bg.jpg'
 
 import { MATCH_MD, MATCH_LG } from '../actions/mediaQuery'
 
 const styles = makeStyles(theme => ({
     root: {
-        background: `linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)`,
+        //background: `linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)`,
+                
+        backgroundImage: `url(${bgParallax})`,
+        backgroundAttachment: 'fixed',
+        //backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
     },
     toolBar: {
         minHeight: theme.spacing(2),
@@ -44,7 +51,8 @@ const styles = makeStyles(theme => ({
     },
     itemIcon: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        color: 'white'
     }
 }))
 

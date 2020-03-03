@@ -20,6 +20,7 @@ import GridListTile from '@material-ui/core/GridListTile'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
 import InfoIcon from '@material-ui/icons/Info'
+//import bgParallax from '../../assets/img/pa_bg.jpg'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,11 +28,19 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper
+        /*
+        backgroundImage: `url(${bgParallax})`,
+        backgroundAttachment: 'fixed',
+        backgroundposition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',*/
+        [theme.breakpoints.up('md')]: {
+            padding: '32px 8px'
+        }
     },
     gridList: {
-        width: '98vw',
-        height: '550px',
+        width: '100vw',
+        height: 'auto',
         '&::-webkit-scrollbar': {
             width: '8px'
         },
