@@ -308,6 +308,9 @@ const HomePage = () => {
                                                             <p className={carouselClasses.descriptionLong}>
                                                                 {item.long}
                                                             </p>
+                                                            <p className={carouselClasses.descriptionShort}>
+                                                                {item.short}
+                                                            </p>
                                                         </div>
                                                     )
                                                 })}
