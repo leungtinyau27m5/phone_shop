@@ -1,171 +1,253 @@
-import React, {} from 'react'
+import React, { } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import bgParallax from '../assets/img/pa_bg.jpg'
 
-import ListSubheader from '@material-ui/core/ListSubheader'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import Collapse from '@material-ui/core/Collapse'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import StarBorder from '@material-ui/icons/StarBorder'
-import { NavLink } from 'react-router-dom'
+import Hidden from '@material-ui/core/Hidden'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
 
-import FacebookIcon from '@material-ui/icons/Facebook';
-import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+import MailOutlineIcon from '@material-ui/icons/MailOutline'
+import ExploreIcon from '@material-ui/icons/Explore'
+import CallIcon from '@material-ui/icons/Call'
+import AirplayIcon from '@material-ui/icons/Airplay'
+import YouTubeIcon from '@material-ui/icons/YouTube'
+import FacebookIcon from '@material-ui/icons/Facebook'
+import TwitterIcon from '@material-ui/icons/Twitter'
 
 const useStyles = makeStyles(theme => ({
     root: {
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
         minHeight: '300px',
         marginTop: '35px',
+        backgroundColor: '#EBEBEB',
+        /*
         backgroundImage: `url(${bgParallax})`,
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        position: 'relative'
+        backgroundSize: 'cover',*/
+        position: 'relative',
+        paddingTop: '15px',
+        paddingBottom: '40px',
+        [theme.breakpoints.down('sm')]: {
+            paddingBottom: '24px',
+            minHeight: '280px'
+        }
     },
-    subheader: {
-        color: 'inherit',
-    },
-    listContainter: {
-        [theme.breakpoints.up('md')]: {
-            position: 'absolute', 
-            right: 15, 
-            top: '50%', 
-            transform: 'translateY(-50%)',
-            display: 'flex',
-            width: 720,
+    expansionPanel: {
+        backgroundColor: 'inherit',
+        borderBottom: '1px solid rgba(0, 0, 0, .125)',
+        marginBottom: -1,
+        borderTop: '1px solid rgba(0, 0, 0, .125)',
+        float: 'left',
+        marginLeft: '1%',
+        [theme.breakpoints.down('sm')]: {
+            width: '98%'
         },
-        [theme.breakpoints.down('sm')]: {
-            padding: 15
+        '&.Mui-expanded': {
+            marginLeft: '1%'
         }
     },
-    list: {
-        width: '100%',
-        //maxWidth: 360,
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-        border: '1px solid white',
-        paddingBottom: 0,
-        alignSelf: 'flex-start',
-        //marginLeft: 10
-        [theme.breakpoints.up('md')]: {
-            maxWidth: 360,
-            marginLeft: 10
-        }, 
-        [theme.breakpoints.down('sm')]: {
-            marginTop: 15
+    expansionPanelSummary: {
+
+    },
+    expansionPanelDetails: {
+        backgroundColor: 'white',
+        padding: '0',
+    },
+    listRoot: {
+        width: '100%'
+    },
+    listItem: {
+        padding: '5px 32px',
+        '& .MuiListItemText-primary': {
+            fontSize: '14px',
+            //float: 'right'
         }
     },
-    navLink: {
-        '&:not(first-of-type) > div': {
-            borderTop: '1px solid white'
-        }
+    lgPanel: {
+        float: 'left',
+        padding: '5px 18px',
+        width: '20%'
     },
-    icon: {
-        '& > svg': {
-            fontSize: '48px'
+    community: {
+        '& .MuiIconButton-root': {
+            margin: '0 8px',
         }
     }
 }))
 
-const listItems = {
-    siteMap: [{
-        primaryText: "Home",
-        icon: "",
-        linkTo: ""
+const panelItems = [{
+    panelName: 'panel1',
+    summary: 'Want More ?',
+    items: [{
+        itemText: 'Powered By IDPone',
+        itemIcon: null,
     }, {
-        primaryText: 'Support',
-        icon: '',
-        linkTo: ''
-    }, {
-        primaryText: 'About Us',
-        icon: '',
-        linkTo: ''
-    }],
-    socialMedia: [{
-        primaryText: 'facebook',
-        icon: <FacebookIcon style={{color: '#115293'}} />,
-        linkTo: ''
-    }, {
-        primaryText: 'whatsapp',
-        icon: <WhatsAppIcon style={{color: '#60D172'}} />,
-        linkTo: ''
+        itemText: 'Phone Health Care Plan',
+        itemIcon: null,
     }]
-}
+}, {
+    panelName: 'panel2',
+    summary: 'Who We Are ?',
+    items: [{
+        itemText: 'About IDeaPhone',
+        itemIcon: <AirplayIcon />,
+    }, {
+        itemText: 'News',
+        itemIcon: null
+    }, {
+        itemText: 'Events',
+        itemIcon: null,
+    }, {
+        itemText: 'Employment',
+        itemIcon: null
+    }]
+}, {
+    panelName: 'panel3',
+    summary: 'Need Help ?',
+    items: [{
+        itemText: 'Find Service Location',
+        itemIcon: <ExploreIcon />,
+    }, {
+        itemText: 'Email Us',
+        itemIcon: <MailOutlineIcon />
+    }, {
+        itemText: 'Call Us',
+        itemIcon: <CallIcon />
+    }]
+}]
 
-const BottomAboutUs = () => {
+const Footer = () => {
     const classes = useStyles()
+    const [expanded, setExpanded] = React.useState(false)
+    const handleExpandPanelChange = panel => (evt, isExpanded) => {
+        setExpanded(isExpanded ? panel : false)
+    }
     return (
         <div className={classes.root}>
-            <div className={classes.listContainter}>
-                <List 
-                    component="nav" 
-                    aria-labelledby="footer-list-map"
-                    subheader={
-                        <ListSubheader component="div" id="footer-list-map" className={classes.subheader}>
-                            Website Map
-                        </ListSubheader>
-                    }
-                    className={classes.list}
-                >
-                    {
-                        listItems.siteMap.map(ele => (
-                            <NavLink 
-                                key={`footer-map-${ele.primaryText}`}
-                                exact
-                                to={ele.linkTo}
-                                activeStyle={{
-                                    textDecoration: 'none',
-                                    color: 'rgba(0, 0, 0, 1)'
-                                }}
-                                className={classes.navLink}
+            <Hidden mdUp>
+                {
+                    panelItems.map((ele, idx) => {
+                        return (
+                            <ExpansionPanel
+                                key={`panel-${ele.panelName}`}
+                                className={classes.expansionPanel}
+                                expanded={expanded === ele.panelName}
+                                onChange={handleExpandPanelChange(ele.panelName)}
                             >
-                                <ListItem button>
-                                    {ele.icon !== "" && ele.icon !== null (<ListItemIcon>{ele.icon}</ListItemIcon>)}
-                                    <ListItemText primary={ele.primaryText} />
-                                </ListItem>
-                            </NavLink>
-                        ))
-                    }
-                </List>
-                <List 
-                    component="nav"
-                    aria-labelledby="foorter-list-social-media"
-                    subheader={
-                        <ListSubheader component="div" id="footer-list-social-media" className={classes.subheader}>
-                            Share
-                        </ListSubheader>
-                    }
-                    className={classes.list}
+                                <ExpansionPanelSummary
+                                    className={classes.expansionPanelSummary}
+                                    expandIcon={<ExpandMoreIcon />}
+                                >
+                                    {ele.summary}
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                                    <List className={classes.listRoot}>
+                                        {
+                                            ele.items.map(item => (
+                                                <ListItem key={`panel-${ele.panelName}-item-${item.itemText}`} className={classes.listItem} button>
+                                                    {item.itemIcon ? <ListItemIcon>{item.itemIcon}</ListItemIcon> : <></>}
+                                                    <ListItemText>{item.itemText}</ListItemText>
+                                                </ListItem>
+                                            ))
+                                        }
+                                    </List>
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        )
+                    })
+                }
+                <ExpansionPanel
+                    className={classes.expansionPanel}
+                    expanded={expanded === 'panel-community'}
+                    onChange={handleExpandPanelChange('panel-community')}
                 >
-                    {
-                        listItems.socialMedia.map(ele => (
-                            <NavLink
-                                key={`footer-map-${ele.primaryText}`}
-                                exact
-                                to={ele.linkTo}
-                                activeStyle={{
-                                    textDecoration: 'none',
-                                    color: 'white'
-                                }}
-                                className={classes.navLink}
-                            >
-                                <ListItem button>
-                                <ListItemIcon className={classes.icon}>{ele.icon}</ListItemIcon>
-                                    <ListItemText primary={ele.primaryText} />
-                                </ListItem>
-                            </NavLink>
-                        ))
-                    }
-                </List>
-            </div>
-        </div> 
+                    <ExpansionPanelSummary
+                        className={classes.expansionPanelSummary}
+                        expandIcon={<ExpandMoreIcon />}
+                    >
+                        Community
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails className={classes.expansionPanelDetails}>
+                        <Typography style={{padding: '5px 8px'}}>
+                            <Tooltip title="YouTube Channel" placement="bottom">
+                                <IconButton className={classes.iconButton}>
+                                    <YouTubeIcon style={{ fontSize: '32px' }} />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="YouTube" placement="bottom">
+                                <IconButton className={classes.iconButton}>
+                                    <FacebookIcon style={{ fontSize: '32px' }} />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Twitter" placement="bottom">
+                                <IconButton className={classes.iconButton}>
+                                    <TwitterIcon style={{ fontSize: '32px' }} />
+                                </IconButton>
+                            </Tooltip>
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+            </Hidden>
+            <Hidden smDown>
+                {
+                    panelItems.map((ele, idx) => (
+                        <div key={`lg-panel-${ele.panelName}`} className={classes.lgPanel}>
+                            <Typography>
+                                {ele.summary}
+                            </Typography>
+                            <List className={classes.listRoot}>
+                                {
+                                    ele.items.map(item => (
+                                        <ListItem
+                                            key={`lg-panel-${ele.panelName}-item-${item.itemText}`}
+                                            className={classes.listItem}
+                                            button
+                                        >
+                                            <ListItemText>{item.itemText}</ListItemText>
+                                            {item.itemIcon ? <ListItemIcon>{item.itemIcon}</ListItemIcon> : <></>}
+                                        </ListItem>
+                                    ))
+                                }
+                            </List>
+                        </div>
+                    ))
+                }
+                <div className={classes.community}>
+                    <Typography>
+                        Community
+                    </Typography>
+                    <Typography>
+                        <Tooltip title="YouTube Channel" placement="bottom">
+                            <IconButton className={classes.iconButton}>
+                                <YouTubeIcon style={{ fontSize: '32px' }} />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="YouTube" placement="bottom">
+                            <IconButton className={classes.iconButton}>
+                                <FacebookIcon style={{ fontSize: '32px' }} />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Twitter" placement="bottom">
+                            <IconButton className={classes.iconButton}>
+                                <TwitterIcon style={{ fontSize: '32px' }} />
+                            </IconButton>
+                        </Tooltip>
+                    </Typography>
+                </div>
+            </Hidden>
+        </div>
     )
 }
 
 
-export default BottomAboutUs
+export default Footer
