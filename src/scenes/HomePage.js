@@ -6,6 +6,7 @@ import AudiotrackIcon from '@material-ui/icons/Audiotrack';
 import ScoreIcon from '@material-ui/icons/Score';
 import CameraIcon from '@material-ui/icons/Camera';
 import InfoIcon from '@material-ui/icons/Info'
+import { Link } from 'react-router-dom'
 
 import phoneBanner from '../assets/img/phone_banner.jpg'
 import banner2 from '../assets/img/banner2.jpg'
@@ -297,7 +298,7 @@ const HomePage = () => {
                         return (
                             <div key={`carousel-item-content-${content.phoneName}-${content.smallImageAlt}`}>
                                 <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${content.backgroundImage})`}}></div>
-                                    <a href={content.link}>
+                                    <Link to={`/phone/${content.link}`}>
                                         <div className={carouselClasses.descriptionContainer} style={{background: `${content.background}`}}>
                                             <img src={content.smallImage} className={carouselClasses.smallImage} alt={content.smallImageAlt}/>
                                             <div className={carouselClasses.descriptionDetail}>
@@ -320,7 +321,7 @@ const HomePage = () => {
                                             {content.phoneName}
                                         </div>
                                         <InfoIcon className={carouselClasses.infoIcon}/>
-                                    </a>
+                                    </Link>
                             </div>
                         )
                     })

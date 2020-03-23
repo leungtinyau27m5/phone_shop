@@ -1,6 +1,6 @@
 import React, { } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import bgParallax from '../assets/img/pa_bg.jpg'
+//import bgParallax from '../assets/img/pa_bg.jpg'
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
@@ -14,6 +14,7 @@ import Hidden from '@material-ui/core/Hidden'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
+import { Link } from 'react-router-dom'
 
 import MailOutlineIcon from '@material-ui/icons/MailOutline'
 import ExploreIcon from '@material-ui/icons/Explore'
@@ -79,9 +80,50 @@ const useStyles = makeStyles(theme => ({
         width: '20%'
     },
     community: {
+        transition: 'all .5s ease-in-out',
         '& .MuiIconButton-root': {
             margin: '0 8px',
         }
+    },
+    facebook: {
+        '&:hover': {
+            color: '#3B579D'
+        }
+    },
+    youtube: {
+        '&:hover': {
+            color: '#C81714'
+        }
+    },
+    twitter: {
+        '&:hover': {
+            color: '#2CAAE1'
+        }
+    },
+    organization: {
+        position: 'absolute',
+        bottom: '5px',
+        paddingLeft: '1%',
+        paddingRight: '1%',
+        fontSize: '12px',
+        width: '98%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        '& > div > span > a': {
+            textDecoration: 'none',
+            color: 'inherit'
+        },
+        '& > div > span:not(:first-of-type)': {
+            marginLeft: '8px',
+        },
+        '& > div > span:not(:first-of-type)::before': {
+            content: "'|'",
+            display: 'inline-block',
+            width: '5px',
+            height: '10px',
+            marginRight: '8px'
+        },
     }
 }))
 
@@ -178,22 +220,28 @@ const Footer = () => {
                         Community
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-                        <Typography style={{padding: '5px 8px'}}>
-                            <Tooltip title="YouTube Channel" placement="bottom">
-                                <IconButton className={classes.iconButton}>
-                                    <YouTubeIcon style={{ fontSize: '32px' }} />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="YouTube" placement="bottom">
-                                <IconButton className={classes.iconButton}>
-                                    <FacebookIcon style={{ fontSize: '32px' }} />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Twitter" placement="bottom">
-                                <IconButton className={classes.iconButton}>
-                                    <TwitterIcon style={{ fontSize: '32px' }} />
-                                </IconButton>
-                            </Tooltip>
+                        <Typography style={{ padding: '5px 8px' }}>
+                            <a rel="noopener noreferrer" href="http://youtube.com" target="_blank" className={classes.link}>
+                                <Tooltip title="YouTube Channel" placement="bottom" className={classes.youtube}>
+                                    <IconButton className={classes.iconButton}>
+                                        <YouTubeIcon style={{ fontSize: '32px' }} />
+                                    </IconButton>
+                                </Tooltip>
+                            </a>
+                            <a rel="noopener noreferrer" href="http://facebook.com" target="_blank" className={classes.link}>
+                                <Tooltip title="Facebook" placement="bottom" classNAme={classes.facebook}>
+                                    <IconButton className={classes.iconButton} >
+                                        <FacebookIcon style={{ fontSize: '32px' }} />
+                                    </IconButton>
+                                </Tooltip>
+                            </a>
+                            <a rel="noopener noreferrer" href="http://twitter.com" target="_blank" className={classes.link}>
+                                <Tooltip title="Twitter" placement="bottom" className={classes.twitter}>
+                                    <IconButton className={classes.iconButton}>
+                                        <TwitterIcon style={{ fontSize: '32px' }} />
+                                    </IconButton>
+                                </Tooltip>
+                            </a>
                         </Typography>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
@@ -227,24 +275,40 @@ const Footer = () => {
                         Community
                     </Typography>
                     <Typography>
-                        <Tooltip title="YouTube Channel" placement="bottom">
-                            <IconButton className={classes.iconButton}>
-                                <YouTubeIcon style={{ fontSize: '32px' }} />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="YouTube" placement="bottom">
-                            <IconButton className={classes.iconButton}>
-                                <FacebookIcon style={{ fontSize: '32px' }} />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Twitter" placement="bottom">
-                            <IconButton className={classes.iconButton}>
-                                <TwitterIcon style={{ fontSize: '32px' }} />
-                            </IconButton>
-                        </Tooltip>
+                        <a rel="noopener noreferrer" href="http://youtube.com" target="_blank" className={classes.link}>
+                            <Tooltip title="YouTube Channel" placement="bottom" className={classes.youtube}>
+                                <IconButton className={classes.iconButton}>
+                                    <YouTubeIcon style={{ fontSize: '32px' }} />
+                                </IconButton>
+                            </Tooltip>
+                        </a>
+                        <a rel="noopener noreferrer" href="http://facebook.com" target="_blank" className={classes.link}>
+                            <Tooltip title="Facebook" placement="bottom" className={classes.facebook} >
+                                <IconButton className={classes.iconButton}>
+                                    <FacebookIcon style={{ fontSize: '32px' }} />
+                                </IconButton>
+                            </Tooltip>
+                        </a>
+                        <a rel="noopener noreferrer" href="http://twitter.com" target="_blank" className={classes.link}>
+                            <Tooltip title="Twitter" placement="bottom" className={classes.twitter}>
+                                <IconButton className={classes.iconButton}>
+                                    <TwitterIcon style={{ fontSize: '32px' }} />
+                                </IconButton>
+                            </Tooltip>
+                        </a>
                     </Typography>
                 </div>
             </Hidden>
+            <div className={classes.organization}>
+                <div> 
+                    <span><Link to="/">Privacy Policy</Link></span>
+                    <span><Link to="/">Terms of Use</Link></span>
+                    <span>&copy; Online Phone Shop Demo Only.</span>
+                </div>
+                <div>
+                    <span>Steve Leung&reg;</span>
+                </div>
+            </div>
         </div>
     )
 }

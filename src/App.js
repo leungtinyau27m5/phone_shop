@@ -1,6 +1,7 @@
 import React from 'react';
 import TopAppBar from './components/TopAppBar'
 import HomePage from './scenes/HomePage'
+import ShoppingPage from './scenes/ShoppingPage'
 import Footer from './components/Footer'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
@@ -10,6 +11,7 @@ function App() {
       <Router>
         <TopAppBar />
         <Route path="/" component={HomePage} />
+        <Route path="/" component={ShoppingPage} />
         <Footer />
       </Router>
     </div>
