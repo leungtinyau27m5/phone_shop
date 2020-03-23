@@ -1,10 +1,11 @@
 import React, {} from 'react'
 
-const ShoppingPage = () => {
+const ErrorPage = () => {
     return (
         <div>
+            Error Page
         </div>
     )
 }
 
-export default ShoppingPage
+export default ErrorPage

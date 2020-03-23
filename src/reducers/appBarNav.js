@@ -1,6 +1,7 @@
 import React, {} from 'react'
 import HomeIcon from '@material-ui/icons/Home'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 
 const initialState = {
     navOptions: [
@@ -8,15 +9,17 @@ const initialState = {
             text: 'Home',
             icon: <HomeIcon />,
             value: 'home',
-            target: 'home',
-            subList: null
-        },
-        {
+            target: '/index',
+        }, {
+            text: 'Mall',
+            icon: <LocalMallIcon />,
+            value: 'mall',
+            target: '/mall',
+        }, {
             text: 'Support',
             icon: <HelpOutlineIcon />,
             value: 'support',
-            target: 'support',
-            subList: null
+            target: '/support',
         }
     ]
 }

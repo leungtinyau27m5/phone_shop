@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: '40px',
         [theme.breakpoints.down('sm')]: {
             paddingBottom: '24px',
-            minHeight: '280px'
+            minHeight: '200px'
         }
     },
     expansionPanel: {
@@ -81,6 +81,7 @@ const useStyles = makeStyles(theme => ({
     },
     community: {
         transition: 'all .5s ease-in-out',
+        textAlign: 'center',
         '& .MuiIconButton-root': {
             margin: '0 8px',
         }
@@ -101,8 +102,9 @@ const useStyles = makeStyles(theme => ({
         }
     },
     organization: {
-        position: 'absolute',
-        bottom: '5px',
+        //position: 'absolute',
+        //bottom: '5px',
+        marginTop: '230px',
         paddingLeft: '1%',
         paddingRight: '1%',
         fontSize: '12px',
@@ -229,7 +231,7 @@ const Footer = () => {
                                 </Tooltip>
                             </a>
                             <a rel="noopener noreferrer" href="http://facebook.com" target="_blank" className={classes.link}>
-                                <Tooltip title="Facebook" placement="bottom" classNAme={classes.facebook}>
+                                <Tooltip title="Facebook" placement="bottom" className={classes.facebook}>
                                     <IconButton className={classes.iconButton} >
                                         <FacebookIcon style={{ fontSize: '32px' }} />
                                     </IconButton>
@@ -300,10 +302,10 @@ const Footer = () => {
                 </div>
             </Hidden>
             <div className={classes.organization}>
-                <div> 
+                <div style={{width: '50%'}}> 
                     <span><Link to="/">Privacy Policy</Link></span>
                     <span><Link to="/">Terms of Use</Link></span>
-                    <span>&copy; Online Phone Shop Demo Only.</span>
+                    <span>Online Phone Shop Demo Only &copy;</span>
                 </div>
                 <div>
                     <span>Steve Leung&reg;</span>

@@ -1,5 +1,6 @@
-import React, {} from 'react'
+import React, { } from 'react'
 import { connect } from 'react-redux'
+import bgParallax from '../assets/img/pa_bg.jpg'
 import AppBar from '@material-ui/core/AppBar'
 import ToolBar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -12,14 +13,15 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Fade from '@material-ui/core/Fade'
-import bgParallax from '../assets/img/pa_bg.jpg'
+
+import { Link } from 'react-router-dom'
 
 import { MATCH_MD, MATCH_LG } from '../actions/mediaQuery'
 
 const styles = makeStyles(theme => ({
     root: {
         //background: `linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)`,
-                
+
         backgroundImage: `url(${bgParallax})`,
         backgroundAttachment: 'fixed',
         //backgroundPosition: 'center',
@@ -56,24 +58,27 @@ const styles = makeStyles(theme => ({
     }
 }))
 
-const TopAppBar = ({mainState, ownState, appBarNav}) => {
+const TopAppBar = ({ mainState, ownState, appBarNav }) => {
     const { navOptions } = appBarNav
     const classes = styles()
     const matchMD = MATCH_MD()
     const matchLG = MATCH_LG()
+
     return (
         <>
             <AppBar className={classes.root} position="static">
                 <ToolBar className={classes.toolBar}>
                     <Hidden smDown>
                         <Fade in={matchMD || matchLG} timeout={1000}>
-                            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                                <AppleIcon className={classes.logo} />
-                            </IconButton>
+                            <Link to={'/index'}>
+                                <IconButton edge="start" color="inherit" aria-label="menu">
+                                    <AppleIcon className={classes.logo} />
+                                </IconButton>
+                            </Link>
                         </Fade>
                     </Hidden>
                     <Hidden mdUp>
-                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                        <IconButton edge="start" color="inherit" aria-label="menu">
                             <MenuIcon />
                         </IconButton>
                     </Hidden>
@@ -82,15 +87,18 @@ const TopAppBar = ({mainState, ownState, appBarNav}) => {
                             <List className={classes.list}>
                                 {
                                     navOptions.map((item, idx) => (
-                                        <ListItem key={`app-bar-item${item.value}`} className={classes.listItem} button>
-                                            {
-                                                item.icon !== null ? 
-                                                    <ListItemIcon className={classes.itemIcon}>{item.icon}</ListItemIcon> :
-                                                    <></>
 
-                                            }
-                                            <ListItemText primary={item.text} />
-                                        </ListItem>
+                                        <Link to={`${item.target}`} key={`app-bar-item${item.value}`}>
+                                            <ListItem className={classes.listItem} button>
+                                                {
+                                                    item.icon !== null ?
+                                                        <ListItemIcon className={classes.itemIcon}>{item.icon}</ListItemIcon> :
+                                                        <></>
+
+                                                }
+                                                <ListItemText primary={item.text} />
+                                            </ListItem>
+                                        </Link>
                                     ))
                                 }
                             </List>
@@ -113,6 +121,6 @@ const mapDispatchToProps = dispatch => ({
 
 })
 export default connect(
-    mapStateToProps, 
+    mapStateToProps,
     mapDispatchToProps
 )(TopAppBar)

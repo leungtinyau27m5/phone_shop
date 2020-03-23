@@ -298,7 +298,7 @@ const HomePage = () => {
                         return (
                             <div key={`carousel-item-content-${content.phoneName}-${content.smallImageAlt}`}>
                                 <div className={carouselClasses.imageContainer} style={{backgroundImage: `url(${content.backgroundImage})`}}></div>
-                                    <Link to={`/phone/${content.link}`}>
+                                    <Link to={`/product/${content.link}`}>
                                         <div className={carouselClasses.descriptionContainer} style={{background: `${content.background}`}}>
                                             <img src={content.smallImage} className={carouselClasses.smallImage} alt={content.smallImageAlt}/>
                                             <div className={carouselClasses.descriptionDetail}>
