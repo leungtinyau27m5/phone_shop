@@ -12,11 +12,12 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Chip from '@material-ui/core/Chip'
+import Avatar from '@material-ui/core/Avatar'
 
 import { addProductFilters, removeProductFilter } from '../actions/shopppingMall'
 
 import TwoPointRangeSlider from '../components/TwoPointRangeSlider'
-import Tags from '../components/mallPage/Tags'
 
 const BootstrapInput = withStyles(theme => ({
     root: {
@@ -131,8 +132,27 @@ const useStyle = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             width: '100%'
         }
+    },
+    tags: {
+        margin: '4px'
     }
 }))
+
+const StyledChip = withStyles({
+    /*
+    root: {
+        border: '1px solid red'
+    },
+    label: {
+        color: 'red'
+    },
+    avatar: {
+        backgroundColor: 'red'
+    },
+    deleteIcon: {
+        color: 'red'
+    }*/
+})(Chip)
 
 const ShoppingMall = (props) => {
     const { shoppingMall, addProductFilters, removeProductFilter } = props
@@ -144,6 +164,10 @@ const ShoppingMall = (props) => {
     }
     const handleSliderOnChange = (itemObj) => {
         addProductFilters(itemObj)
+    }
+    const handleFilterTagOnDelete = (evt, item) => {
+        console.log(item)
+        removeProductFilter(item)
     }
     const classes = useStyle()
     return (
@@ -175,7 +199,20 @@ const ShoppingMall = (props) => {
                     </FormControl>
                 </div>
                 <div className={classes.filterTags}>
-
+                    {
+                        shoppingMall.appliedFilters.map(item => (
+                            <StyledChip
+                                color={'secondary'}
+                                className={classes.tags} 
+                                key={`filter-list-tag-${item.filterValue}`}
+                                variant="outlined" 
+                                size="small" 
+                                onDelete={(evt) => handleFilterTagOnDelete(evt, item)} 
+                                label={item.filterValue.substring(0, 1).toUpperCase() + item.filterValue.substring(1)}
+                                avatar={<Avatar>{item.filterValue.substring(0, 1).toUpperCase()}</Avatar>} 
+                            />
+                        ))
+                    }
                 </div>
             </div>
             <div className={classes.mainContainer}>

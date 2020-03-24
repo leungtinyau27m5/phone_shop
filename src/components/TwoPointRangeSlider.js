@@ -99,9 +99,9 @@ const TwoPointRangeSlider = (props) => {
     }
     const sliderChanged = (evt, value) => {
         if (value[0] === min && value[1] === max) {
-            removeProductFilter({type: 'scale', value: itemValue, currentValue: value})
+            removeProductFilter({filterType: 'scale', filterValue: itemValue, currentValue: value})
         } else {
-            handleSliderOnChange({type: 'scale', value: itemValue, currentValue: value})
+            handleSliderOnChange({filterType: 'scale', filterValue: itemValue, currentValue: value})
         }
     }
     return (
