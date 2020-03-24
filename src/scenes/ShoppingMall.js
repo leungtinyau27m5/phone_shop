@@ -126,7 +126,11 @@ const useStyle = makeStyles(theme => ({
 
     },
     expandedFilterContainer: {
-        width: '100%'
+        width: '45%',
+        margin: '0 8px',
+        [theme.breakpoints.down('xs')]: {
+            width: '100%'
+        }
     }
 }))
 
