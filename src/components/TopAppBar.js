@@ -30,7 +30,7 @@ const styles = makeStyles(theme => ({
     },
     toolBar: {
         minHeight: theme.spacing(2),
-        transition: 'all .5s linear'
+        transition: 'all .5s linear',
     },
     logo: {
         minHeight: theme.spacing(2),
@@ -66,7 +66,7 @@ const TopAppBar = ({ mainState, ownState, appBarNav }) => {
 
     return (
         <>
-            <AppBar className={classes.root} position="static">
+            <AppBar className={classes.root} position="fixed">
                 <ToolBar className={classes.toolBar}>
                     <Hidden smDown>
                         <Fade in={matchMD || matchLG} timeout={1000}>
@@ -107,6 +107,7 @@ const TopAppBar = ({ mainState, ownState, appBarNav }) => {
 
                 </ToolBar>
             </AppBar>
+            <div style={{height: '65px'}}></div>
         </>
     )
 }
