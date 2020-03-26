@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 
+import PhonesPreivewList from '../components/mallPage/PhonesPreivewList'
 import { addProductFilters, removeProductFilter } from '../actions/shopppingMall'
 
 import TwoPointRangeSlider from '../components/TwoPointRangeSlider'
@@ -86,7 +87,7 @@ const useStyle = makeStyles(theme => ({
         paddingTop: '15px'
     },
     filterContainer: {
-        minHeight: '200px',
+        //minHeight: '200px',
         [theme.breakpoints.up('md')]: {
             width: '25%'
         },
@@ -99,7 +100,7 @@ const useStyle = makeStyles(theme => ({
     },
     productGallery: {
         minHeight: '200px',
-        boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
+        //boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
         [theme.breakpoints.up('md')]: {
             width: '75%'
         },
@@ -166,7 +167,6 @@ const ShoppingMall = (props) => {
         addProductFilters(itemObj)
     }
     const handleFilterTagOnDelete = (evt, item) => {
-        console.log(item)
         removeProductFilter(item)
     }
     const classes = useStyle()
@@ -231,6 +231,7 @@ const ShoppingMall = (props) => {
                                         unit={item.unit}
                                         handleSliderOnChange={handleSliderOnChange}
                                         removeProductFilter={removeProductFilter}
+                                        appliedValue={shoppingMall.appliedFilters.find(ele => ele.filterValue === item.value)}
                                     />
                                 ))
                             }
@@ -269,6 +270,7 @@ const ShoppingMall = (props) => {
                                                         max={item.max}
                                                         step={item.step}
                                                         unit={item.unit}
+                                                        filterValue={item.filterValue}
                                                     />
                                                 </div>
                                             ))
@@ -279,7 +281,9 @@ const ShoppingMall = (props) => {
                         </div>
                     </Hidden>
                 </div>
-                <div className={classes.productGallery}></div>
+                <div className={classes.productGallery}>
+                    <PhonesPreivewList />
+                </div>
             </div>
         </div>
     )

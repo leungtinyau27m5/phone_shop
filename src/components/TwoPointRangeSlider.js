@@ -89,13 +89,32 @@ const valueText = (value) => {
 }
 const TwoPointRangeSlider = (props) => {
     const classes = useStyle()
-    const { handleSliderOnChange, removeProductFilter, itemText, itemValue, min, max, step, unit } = props
+    const { 
+        handleSliderOnChange, 
+        removeProductFilter, 
+        itemText, 
+        itemValue, 
+        min, 
+        max, 
+        unit,
+        appliedValue 
+    } = props
+    const [sliderValue, setSliderValue] = React.useState(
+                                                appliedValue !== undefined ? 
+                                                [
+                                                    appliedValue.currentValue[0], 
+                                                    appliedValue.currentValue[1]
+                                                ] : 
+                                                [min, max]
+                                            )
     const [expanded, setExpand] = React.useState(false)
-    const [currentMin, setMin] = React.useState(min)
-    const [currentMax, setMax] = React.useState(max)
+    React.useEffect(() => {
+        if (appliedValue === undefined) {
+            setSliderValue([min, max])
+        }
+    }, [appliedValue, min, max])
     const sliderOnChange = (evt, value) => {
-        setMin(value[0])
-        setMax(value[1])
+        setSliderValue(value)
     }
     const sliderChanged = (evt, value) => {
         if (value[0] === min && value[1] === max) {
@@ -112,13 +131,14 @@ const TwoPointRangeSlider = (props) => {
                     expandIcon={<ExpandMoreIcon />}
                 >
                     <Typography className={classes.heading}>{itemText}</Typography>
-                    <Typography className={classes.subheading}>{`${currentMin} to ${currentMax}${unit}`}</Typography>
+                    <Typography className={classes.subheading}>{`${sliderValue[0]} to ${sliderValue[1]}${unit}`}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <AirbnbSlider
                         style={props.style}
                         getAriaValueText={valueText}
-                        defaultValue={[props.min, props.max]}
+                        value={sliderValue}
+                        //defaultValue={[props.min, props.max]}
                         step={props.step}
                         min={props.min}
                         max={props.max}

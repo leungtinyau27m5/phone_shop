@@ -182,10 +182,6 @@ const shoppingMall = (state = initialState, action) => {
         case REMOVE_FILTER:
             let idx = -1
             idx = state.appliedFilters.findIndex(item => item.filterValue === action.filterValue)
-            console.log(state.appliedFilters)
-            console.log(action.filterValue)
-            console.log(action.filterType)
-            console.log('remove filter item ' + idx)
             if (idx === -1) return state
             return (
                 {
