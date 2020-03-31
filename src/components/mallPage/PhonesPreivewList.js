@@ -14,15 +14,22 @@ const PhonesPreviewList = (props) => {
     const classes = useStyle()
     var filteredList = visiblePhoneList.all
     console.log(filters)
-
-    filters.forEach(filter => {
-        switch (filter.filterType) {
+    console.log(filteredList)
+    filters.forEach(item => {
+        switch (item.filterType) {
             case 'scale':
                 if (filteredList.length === 0) return
                 
                 filteredList = filteredList.filter((phone, index, arr) => {
-                    var value = phone[filter.filterValue].replace(/[a-z]/gi, '')
-                    return value <= filter.currentValue[1] && value >= filter.currentValue[0]
+                    var value = phone[item.filterValue].replace(/[a-z]/gi, '')
+                    return value <= item.currentValue[1] && value >= item.currentValue[0]
+                })
+                break
+            case 'check':
+                if (filteredList.length === 0) return 
+
+                filteredList = filteredList.filter((phone, index, arr) => {
+                    return phone[item.filterValue].map(ele => item.currentValue.includes(ele)).includes(true)
                 })
                 break
             default: return filteredList

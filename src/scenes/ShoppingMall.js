@@ -7,18 +7,13 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import InputBase from '@material-ui/core/InputBase'
 import Typography from '@material-ui/core/Typography'
-import Hidden from '@material-ui/core/Hidden'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 
 import PhonesPreivewList from '../components/mallPage/PhonesPreivewList'
 import { addProductFilters, removeProductFilter } from '../actions/shopppingMall'
 
-import TwoPointRangeSlider from '../components/TwoPointRangeSlider'
+import FiltersContainer from '../components/mallPage/FiltersContainer'
 
 const BootstrapInput = withStyles(theme => ({
     root: {
@@ -86,18 +81,6 @@ const useStyle = makeStyles(theme => ({
         flexWrap: 'wrap',
         paddingTop: '15px'
     },
-    filterContainer: {
-        //minHeight: '200px',
-        [theme.breakpoints.up('md')]: {
-            width: '25%'
-        },
-        [theme.breakpoints.down('sm')]: {
-            width: '100%'
-        },
-        '& > div': {
-            padding: '0 16px'
-        }
-    },
     productGallery: {
         minHeight: '200px',
         //boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
@@ -107,31 +90,6 @@ const useStyle = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             width: '100%',
             boxShadow: 'none'
-        }
-    },
-    expandedPanel: {
-
-    },
-    expandedPanelDetail: {
-        flexWrap: 'wrap'
-    },
-    expandedPanelHeading: {
-        fontSize: theme.typography.pxToRem(15),
-        flexBasis: '33.33%',
-        flexShrink: 0
-    },
-    expandedPanelSubheading: {
-        fontSize: theme.typography.pxToRem(14),
-        color: theme.palette.text.secondary,
-    },
-    expandedPanelSummary: {
-
-    },
-    expandedFilterContainer: {
-        width: '45%',
-        margin: '0 8px',
-        [theme.breakpoints.down('xs')]: {
-            width: '100%'
         }
     },
     tags: {
@@ -156,14 +114,13 @@ const StyledChip = withStyles({
 })(Chip)
 
 const ShoppingMall = (props) => {
-    console.log(props)
     const { shoppingMall, addProductFilters, removeProductFilter, visiblePhoneList } = props
-    const [expandedFilterPanel, setFilterPanelExpansion] = React.useState(false)
     const [sort, setSorting] = React.useState('')
+
     const handleSortChange = (evt) => {
         setSorting(evt.target.value)
     }
-    const handleSliderOnChange = (itemObj) => {
+    const handleFilterAdd = (itemObj) => {
         addProductFilters(itemObj)
     }
     const handleFilterTagOnDelete = (evt, item) => {
@@ -216,71 +173,12 @@ const ShoppingMall = (props) => {
                 </div>
             </div>
             <div className={classes.mainContainer}>
-                <div className={classes.filterContainer}>
-                    <Hidden smDown>
-                        <div>
-                            {
-                                shoppingMall.filterList.scaleItem.map(item => (
-                                    <TwoPointRangeSlider
-                                        key={`scale-filter-item-${item.value}`}
-                                        itemText={item.text}
-                                        itemValue={item.value}
-                                        min={item.min}
-                                        max={item.max}
-                                        step={item.step}
-                                        unit={item.unit}
-                                        handleSliderOnChange={handleSliderOnChange}
-                                        removeProductFilter={removeProductFilter}
-                                        appliedValue={shoppingMall.appliedFilters.find(ele => ele.filterValue === item.value)}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </Hidden>
-                    <Hidden mdUp>
-                        <div>
-                            {
-                                <ExpansionPanel 
-                                    className={classes.expandedPanel} 
-                                    expanded={expandedFilterPanel}
-                                    onChange={() => setFilterPanelExpansion(!expandedFilterPanel)}
-                                >
-                                    <ExpansionPanelSummary
-                                        className={classes.expandedPanelSummary}
-                                        expandIcon={<ExpandMoreIcon />}
-                                    >
-                                        <Typography className={classes.expandedPanelHeading}>Filters</Typography>
-                                        <Typography className={classes.expandedPanelSubheading}>
-
-                                        </Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails className={classes.expandedPanelDetail}>
-                                        {
-                                            shoppingMall.filterList.scaleItem.map(item => (
-                                                <div 
-                                                    key={`expaned-scale-filter-item-${item.value}`}
-                                                    className={classes.expandedFilterContainer}
-                                                >
-                                                    <TwoPointRangeSlider
-                                                        handleSliderOnChange={handleSliderOnChange}
-                                                        removeProductFilter={removeProductFilter}
-                                                        itemText={item.text}
-                                                        itemValue={item.value}
-                                                        min={item.min}
-                                                        max={item.max}
-                                                        step={item.step}
-                                                        unit={item.unit}
-                                                        filterValue={item.filterValue}
-                                                    />
-                                                </div>
-                                            ))
-                                        }
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
-                            }
-                        </div>
-                    </Hidden>
-                </div>
+                <FiltersContainer 
+                    filterList={shoppingMall.filterList}
+                    handleFilterAdd={handleFilterAdd}
+                    removeProductFilter={removeProductFilter}
+                    appliedFilters={shoppingMall.appliedFilters}
+                />
                 <div className={classes.productGallery}>
                     <PhonesPreivewList 
                         filters={shoppingMall.appliedFilters} 

@@ -51,27 +51,54 @@ const initialState = {
                 value: 'wifi',
                 text: 'WLAN (Wi-Fi)'
             }, {
-                value: 'bluetooth',
-                text: 'BlueTooth'
+                value: 'blueteeth',
+                text: 'BlueTeeth'
             }, {
                 value: 'gps',
                 text: 'GPS'
             }, {
                 value: 'nfc',
-                text: 'nfc'
+                text: 'NFC'
             }, {
                 value: 'typeC',
                 text: 'USB Type C'
             }, {
                 value: 'wirelessCharge',
-                text: 'wireles Charging'
+                text: 'Wireles Charging'
             }]
         }, {
             value: 'simCard',
-            text: 'Dual Sim Slot',
+            text: 'Sim Card',
+            subList: [
+                {
+                    value: 'single',
+                    text: 'One Sim Card'
+                }, {
+                    value: 'dual',
+                    text: 'Dual Sim Card Support'
+                }, {
+                    value: 'virtual',
+                    text: 'E-Sim Card Support'
+                }
+            ]
         }, {
             value: 'memeroyCard',
-            text: 'Memoery Card Slot'
+            text: 'Memoery Card Slot',
+            subList: [
+                {
+                    value: 'none',
+                    text: 'N/A',
+                }, {
+                    value: 'single',
+                    text: '1'
+                }, {
+                    value: 'two',
+                    text: '2'
+                }, {
+                    value: 'more',
+                    text: '> 3'
+                }
+            ]
         }],
         scaleItem: [{
             value: 'height',
@@ -145,7 +172,31 @@ const initialState = {
             ],
         }]
     },
-    appliedFilters: []
+    appliedFilters: [{
+        filterType: 'check',
+        filterValue: 'brand',
+        currentValue: ['acer', 'asus', 'apple', 'lg', 'samsung']
+    }, {
+        filterType: 'check',
+        filterValue: 'network',
+        currentValue: ['3g', '4g', '5g']
+    }, {
+        filterType: 'check',
+        filterValue: 'audio',
+        currentValue: ['jack', 'dualSpeaker']
+    }, {
+        filterType: 'check',
+        filterValue: 'connectivity',
+        currentValue: ['wifi', 'blueteeth', 'gps', 'nfc', 'usbTypeC', 'wirelessCharging']
+    }, {
+        filterType: 'check',
+        filterValue: 'simCard',
+        currentValue: ['single', 'dual', 'virtual']
+    }, {
+        filterType: 'check',
+        filterValue: 'memoryCard',
+        currentValue: ['none', 'single', '2', 'more']
+    }]
 }
 
 const shoppingMall = (state = initialState, action) => {

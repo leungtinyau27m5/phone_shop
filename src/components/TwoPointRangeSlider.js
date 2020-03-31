@@ -90,7 +90,7 @@ const valueText = (value) => {
 const TwoPointRangeSlider = (props) => {
     const classes = useStyle()
     const { 
-        handleSliderOnChange, 
+        handleFilterAdd, 
         removeProductFilter, 
         itemText, 
         itemValue, 
@@ -120,7 +120,7 @@ const TwoPointRangeSlider = (props) => {
         if (value[0] === min && value[1] === max) {
             removeProductFilter({filterType: 'scale', filterValue: itemValue, currentValue: value})
         } else {
-            handleSliderOnChange({filterType: 'scale', filterValue: itemValue, currentValue: value})
+            handleFilterAdd({filterType: 'scale', filterValue: itemValue, currentValue: value})
         }
     }
     return (

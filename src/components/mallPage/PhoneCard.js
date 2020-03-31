@@ -52,7 +52,6 @@ const useStyle = makeStyles(theme => ({
 
 const PhoneCard = (props) => {
     const { detail } = props
-    console.log(detail)
     const classes = useStyle()
     return (
         <div className={classes.root}>
