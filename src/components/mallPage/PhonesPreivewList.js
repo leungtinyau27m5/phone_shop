@@ -13,8 +13,6 @@ const PhonesPreviewList = (props) => {
     const { visiblePhoneList, filters } = props
     const classes = useStyle()
     var filteredList = visiblePhoneList.all
-    console.log(filters)
-    console.log(filteredList)
     filters.forEach(item => {
         switch (item.filterType) {
             case 'scale':

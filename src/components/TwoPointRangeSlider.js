@@ -109,9 +109,8 @@ const TwoPointRangeSlider = (props) => {
                                             )
     const [expanded, setExpand] = React.useState(false)
     React.useEffect(() => {
-        if (appliedValue === undefined) {
+        if (appliedValue === undefined)
             setSliderValue([min, max])
-        }
     }, [appliedValue, min, max])
     const sliderOnChange = (evt, value) => {
         setSliderValue(value)

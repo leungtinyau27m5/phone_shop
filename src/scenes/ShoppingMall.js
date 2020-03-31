@@ -157,18 +157,21 @@ const ShoppingMall = (props) => {
                 </div>
                 <div className={classes.filterTags}>
                     {
-                        shoppingMall.appliedFilters.map(item => (
-                            <StyledChip
-                                color={'secondary'}
-                                className={classes.tags} 
-                                key={`filter-list-tag-${item.filterValue}`}
-                                variant="outlined" 
-                                size="small" 
-                                onDelete={(evt) => handleFilterTagOnDelete(evt, item)} 
-                                label={item.filterValue.substring(0, 1).toUpperCase() + item.filterValue.substring(1)}
-                                avatar={<Avatar>{item.filterValue.substring(0, 1).toUpperCase()}</Avatar>} 
-                            />
-                        ))
+                        shoppingMall.appliedFilters.map(item => {
+                            if (item.filterType === 'check') return <></>
+                            return (
+                                <StyledChip
+                                    color={'secondary'}
+                                    className={classes.tags} 
+                                    key={`filter-list-tag-${item.filterValue}`}
+                                    variant="outlined" 
+                                    size="small" 
+                                    onDelete={(evt) => handleFilterTagOnDelete(evt, item)} 
+                                    label={item.filterValue.substring(0, 1).toUpperCase() + item.filterValue.substring(1)}
+                                    avatar={<Avatar>{item.filterValue.substring(0, 1).toUpperCase()}</Avatar>} 
+                                />
+                            )
+                        })
                     }
                 </div>
             </div>

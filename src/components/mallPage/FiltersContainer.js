@@ -61,13 +61,13 @@ const ScaleItemRendering = ({ item, handleFilterAdd, removeProductFilter, applie
         unit={item.unit}
         handleFilterAdd={handleFilterAdd}
         removeProductFilter={removeProductFilter}
-        appliedFilters={appliedFilters.find(ele => ele.filterValue === item.value)}
+        appliedValue={appliedFilters.find(ele => ele.filterValue === item.value)}
     />
 )
 const FiltersContainer = (props) => {
     const { filterList, handleFilterAdd, removeProductFilter, appliedFilters } = props
     const [expandedFilterPanel, setFilterPanelExpansion] = React.useState(false)
-    const [expandedCheckItems, setCheckItemPanels] = React.useState(Array(filterList.scaleItem.length).fill(false))
+    const [expandedCheckItems, setCheckItemPanels] = React.useState(Array(filterList.checkItem.length).fill(false))
     const [allCheckItems, setCheckItemOnOff] = React.useState(
                                                 filterList.checkItem.map(item => (
                                                     item.subList.map(check => ({
@@ -76,6 +76,10 @@ const FiltersContainer = (props) => {
                                                     }))
                                                 ))
                                             )
+    /*
+    React.useEffect(() => {
+        console.log(appliedFilters)
+    }, [appliedFilters])*/
     const classes = useStyle()
     const checkItemPanelExpansion = (idx) => {
         var temp = [...expandedCheckItems]
@@ -175,6 +179,7 @@ const FiltersContainer = (props) => {
                                                 handleFilterAdd={handleFilterAdd}
                                                 removeProductFilter={removeProductFilter}
                                                 appliedFilters={appliedFilters}
+
                                             />
                                         </div>
                                     ))
