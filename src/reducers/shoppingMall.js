@@ -74,17 +74,17 @@ const initialState = {
             text: 'Memoery Card Slot'
         }],
         scaleItem: [{
-            value: 'hieght',
-            text: 'Hieght',
-            min: 90,
-            max: 160,
+            value: 'height',
+            text: 'Height',
+            min: 100,
+            max: 280,
             step: 10,
             unit: 'mm'
         }, {
             value: 'width',
             text: 'Width',
             min: 40,
-            max: 80,
+            max: 160,
             step: 5,
             unit: 'mm'
         }, {

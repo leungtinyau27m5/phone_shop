@@ -12,15 +12,19 @@ import {
 
 const useStyle = makeStyles(theme => ({
     root: {
-        [theme.breakpoints.down('sm')]: {
+        width: '25%',
+        margin: '5px',
+        [theme.breakpoints.down('md')]: {
+            width: '48%',
+            margin: '1%'
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: '100%',
             marginTop: '20px'
-        }
+        },
     },
     card: {
-        [theme.breakpoints.down('sm')]: {
-            maxWidth: '100%'
-        },
-        maxWidth: '30%',
+
     },
     media: {
         height: 140,
@@ -48,6 +52,7 @@ const useStyle = makeStyles(theme => ({
 
 const PhoneCard = (props) => {
     const { detail } = props
+    console.log(detail)
     const classes = useStyle()
     return (
         <div className={classes.root}>
@@ -66,7 +71,7 @@ const PhoneCard = (props) => {
                         variant="h5"
                         component="h2"
                         dangerouslySetInnerHTML={{
-                            __html: detail.promotion.slogan
+                            __html: detail.name
                         }}
                     />
                     <Typography
@@ -80,9 +85,7 @@ const PhoneCard = (props) => {
                     />
                 </CardContent>
                 <CardActions>
-                    <Button size="small" color="primary">
-                        Share
-                    </Button>
+                    <Typography>{`$${detail.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</Typography>
                     <Button size="small" color="primary">
                         Learn More
                     </Button>

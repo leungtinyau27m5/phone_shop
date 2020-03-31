@@ -4,7 +4,7 @@ import HomePage from './scenes/HomePage'
 import ShoppingMall from './scenes/ShoppingMall'
 import ProductView from './scenes/ProductView'
 import Footer from './components/Footer'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 //<Route path="/product/:phoneProductCode" component={ShoppingMall} />
 function App() {
@@ -16,6 +16,9 @@ function App() {
           <Route path="/index" component={HomePage} />
           <Route path="/mall" component={ShoppingMall} />
           <Route path="/product/:phoneProductCode" component={ProductView} />
+          <Route exact path="/">
+            <Redirect to="/index" />
+          </Route>
         </Switch>
         <Footer />
       </Router>

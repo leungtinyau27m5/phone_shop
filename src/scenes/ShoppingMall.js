@@ -156,10 +156,10 @@ const StyledChip = withStyles({
 })(Chip)
 
 const ShoppingMall = (props) => {
-    const { shoppingMall, addProductFilters, removeProductFilter } = props
+    console.log(props)
+    const { shoppingMall, addProductFilters, removeProductFilter, visiblePhoneList } = props
     const [expandedFilterPanel, setFilterPanelExpansion] = React.useState(false)
     const [sort, setSorting] = React.useState('')
-    console.log(shoppingMall.appliedFilters)
     const handleSortChange = (evt) => {
         setSorting(evt.target.value)
     }
@@ -282,7 +282,10 @@ const ShoppingMall = (props) => {
                     </Hidden>
                 </div>
                 <div className={classes.productGallery}>
-                    <PhonesPreivewList />
+                    <PhonesPreivewList 
+                        filters={shoppingMall.appliedFilters} 
+                        visiblePhoneList={visiblePhoneList}
+                    />
                 </div>
             </div>
         </div>
@@ -290,7 +293,8 @@ const ShoppingMall = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    shoppingMall: state.shoppingMall
+    shoppingMall: state.shoppingMall,
+    visiblePhoneList: state.phonesPreivewList,
 })
 const mapDisptachToProps = (dispatch) => ({
     addProductFilters: conditions => dispatch(addProductFilters(conditions)),
