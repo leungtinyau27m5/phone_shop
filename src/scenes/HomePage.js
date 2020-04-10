@@ -19,9 +19,9 @@ import phone4 from '../assets/img/phone4.png'
 
 import Recommendation from '../components/homePage/Recommendation'
 
-
+//adding comment
 const scale = {
-    hoverImage: 70
+    hoverImage: 70,
 }
 
 const useStyles = makeStyles(theme => ({
