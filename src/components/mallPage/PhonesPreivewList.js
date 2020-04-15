@@ -19,14 +19,20 @@ const PhonesPreviewList = (props) => {
                 if (filteredList.length === 0) return
                 
                 filteredList = filteredList.filter((phone, index, arr) => {
-                    var value = phone[item.filterValue].replace(/[a-z]/gi, '')
+                    var value;
+                    if (typeof phone[item.filterValue] === 'string') {
+                        value = phone[item.filterValue].replace(/[a-z]/gi, '')
+                    } else {
+                        value = phone[item.filterValue];
+                    }
                     return value <= item.currentValue[1] && value >= item.currentValue[0]
                 })
                 break
             case 'check':
                 if (filteredList.length === 0) return 
-
+                console.log(item.filterValue);
                 filteredList = filteredList.filter((phone, index, arr) => {
+                    
                     return phone[item.filterValue].map(ele => item.currentValue.includes(ele)).includes(true)
                 })
                 break

@@ -82,7 +82,7 @@ const initialState = {
                 }
             ]
         }, {
-            value: 'memeroyCard',
+            value: 'memoryCard',
             text: 'Memoery Card Slot',
             subList: [
                 {
